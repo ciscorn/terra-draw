@@ -149,7 +149,7 @@ class TerraDraw {
 		});
 
 		const getChanged = (
-			ids: FeatureId[],
+			ids: FeatureId[]
 		): {
 			changed: GeoJSONStoreFeatures[];
 			unchanged: GeoJSONStoreFeatures[];
@@ -197,7 +197,7 @@ class TerraDraw {
 						unchanged,
 						updated: [],
 					},
-					this.getModeStyles(),
+					this.getModeStyles()
 				);
 			} else if (event === "update") {
 				this._adapter.render(
@@ -207,17 +207,17 @@ class TerraDraw {
 						unchanged,
 						updated: changed,
 					},
-					this.getModeStyles(),
+					this.getModeStyles()
 				);
 			} else if (event === "delete") {
 				this._adapter.render(
 					{ created: [], deletedIds: ids, unchanged, updated: [] },
-					this.getModeStyles(),
+					this.getModeStyles()
 				);
 			} else if (event === "styling") {
 				this._adapter.render(
 					{ created: [], deletedIds: [], unchanged, updated: [] },
-					this.getModeStyles(),
+					this.getModeStyles()
 				);
 			}
 		};
@@ -235,7 +235,7 @@ class TerraDraw {
 
 			this._adapter.render(
 				{ created: [], deletedIds: [], unchanged, updated: changed },
-				this.getModeStyles(),
+				this.getModeStyles()
 			);
 		};
 
@@ -261,7 +261,7 @@ class TerraDraw {
 						unchanged,
 						updated: changed,
 					},
-					this.getModeStyles(),
+					this.getModeStyles()
 				);
 			}
 		};
@@ -275,7 +275,7 @@ class TerraDraw {
 				project: this._adapter.project.bind(this._adapter),
 				unproject: this._adapter.unproject.bind(this._adapter),
 				setDoubleClickToZoom: this._adapter.setDoubleClickToZoom.bind(
-					this._adapter,
+					this._adapter
 				),
 				onChange: onChange,
 				onSelect: onSelect,
@@ -305,7 +305,7 @@ class TerraDraw {
 					feature.properties[SELECT_PROPERTIES.SELECTED]
 				) {
 					return this._modes[this._instanceSelectMode].styleFeature.bind(
-						this._modes[this._instanceSelectMode],
+						this._modes[this._instanceSelectMode]
 					)(feature);
 				}
 
@@ -324,7 +324,7 @@ class TerraDraw {
 			lng: number;
 			lat: number;
 		},
-		options?: { pointerDistance: number; ignoreSelectFeatures: boolean },
+		options?: { pointerDistance: number; ignoreSelectFeatures: boolean }
 	) {
 		const pointerDistance =
 			options && options.pointerDistance !== undefined
@@ -374,7 +374,7 @@ class TerraDraw {
 					const distanceToLine = pixelDistanceToLine(
 						inputPoint,
 						project(coord[0], coord[1]),
-						project(nextCoord[0], nextCoord[1]),
+						project(nextCoord[0], nextCoord[1])
 					);
 
 					if (distanceToLine < pointerDistance) {
@@ -385,7 +385,7 @@ class TerraDraw {
 			} else {
 				const lngLatInsidePolygon = pointInPolygon(
 					[lng, lat],
-					feature.geometry.coordinates,
+					feature.geometry.coordinates
 				);
 
 				if (lngLatInsidePolygon) {
@@ -427,7 +427,7 @@ class TerraDraw {
 	 */
 	setModeStyles<Styling extends Record<string, number | HexColor>>(
 		mode: string,
-		styles: Styling,
+		styles: Styling
 	) {
 		this.checkEnabled();
 		if (!this._modes[mode]) {
@@ -619,8 +619,8 @@ class TerraDraw {
 				const reason = validationResult.reason
 					? validationResult.reason
 					: !validationResult.valid
-						? "Feature is invalid"
-						: undefined;
+					? "Feature is invalid"
+					: undefined;
 				return {
 					id: (feature as { id?: FeatureId }).id,
 					valid,
@@ -695,7 +695,7 @@ class TerraDraw {
 	 */
 	getFeaturesAtLngLat(
 		lngLat: { lng: number; lat: number },
-		options?: { pointerDistance: number; ignoreSelectFeatures: boolean },
+		options?: { pointerDistance: number; ignoreSelectFeatures: boolean }
 	) {
 		const { lng, lat } = lngLat;
 
@@ -704,7 +704,7 @@ class TerraDraw {
 				lng,
 				lat,
 			},
-			options,
+			options
 		);
 	}
 
@@ -717,10 +717,10 @@ class TerraDraw {
 	 */
 	getFeaturesAtPointerEvent(
 		event: PointerEvent | MouseEvent,
-		options?: { pointerDistance: number; ignoreSelectFeatures: boolean },
+		options?: { pointerDistance: number; ignoreSelectFeatures: boolean }
 	) {
 		const getLngLatFromEvent = this._adapter.getLngLatFromEvent.bind(
-			this._adapter,
+			this._adapter
 		);
 
 		const lngLat = getLngLatFromEvent(event);
@@ -755,7 +755,7 @@ class TerraDraw {
 	 */
 	on<T extends TerraDrawEvents>(
 		event: T,
-		callback: TerraDrawEventListeners[T],
+		callback: TerraDrawEventListeners[T]
 	) {
 		const listeners = this._eventListeners[
 			event
@@ -775,7 +775,7 @@ class TerraDraw {
 	 */
 	off<T extends TerraDrawEvents>(
 		event: TerraDrawEvents,
-		callback: TerraDrawEventListeners[T],
+		callback: TerraDrawEventListeners[T]
 	) {
 		const listeners = this._eventListeners[
 			event
@@ -805,7 +805,7 @@ export {
 	// Types that are required for 3rd party developers to extend
 	TerraDrawExtend,
 
-	// Basic types that appear in arguments and return values
+	// Basic types that appear in the public API
 	BehaviorConfig,
 	FeatureId,
 	GeoJSONStoreFeatures,
@@ -814,6 +814,7 @@ export {
 	IdStrategy,
 	TerraDrawAdapterStyling,
 	TerraDrawBaseDrawMode,
+	TerraDrawBaseSelectMode,
 	TerraDrawEventListeners,
 	TerraDrawEvents,
 	TerraDrawKeyboardEvent,
